@@ -1,0 +1,231 @@
+<html>
+<head><title></title>
+<script src="src/charts.js"></script>
+<!--comment-->
+</head>
+<body>
+<canvas id="myCanvas" width="235" height="200" style="border:1px solid #000000;">
+</canvas>
+<script>
+var candleStartTime=0;
+var candleUpBorder=2;
+var candleDownBorder=3;
+
+var high=1;
+var low=4;
+var candles=[
+    [
+        1655452800000,
+        "0.8428",
+        "0.8780",
+        "0.8337",
+        "0.8543",
+        "30338564",
+        1655467199999,
+        "25806094.4169",
+        86620,
+        "15348030",
+        "13056837.2817",
+        "0"
+    ],
+    [
+        1655467200000,
+        "0.8543",
+        "0.8629",
+        "0.8306",
+        "0.8448",
+        "30331174",
+        1655481599999,
+        "25616165.7950",
+        90242,
+        "14993555",
+        "12664077.5774",
+        "0"
+    ],
+    [
+        1655481600000,
+        "0.8447",
+        "0.8500",
+        "0.8335",
+        "0.8397",
+        "15108287",
+        1655495999999,
+        "12721694.9521",
+        51006,
+        "7083294",
+        "5965535.2079",
+        "0"
+    ],
+    [
+        1655496000000,
+        "0.8397",
+        "0.8516",
+        "0.8325",
+        "0.8383",
+        "11648391",
+        1655510399999,
+        "9821259.8672",
+        38687,
+        "5798092",
+        "4891239.0835",
+        "0"
+    ],
+    [
+        1655510400000,
+        "0.8383",
+        "0.8563",
+        "0.8178",
+        "0.8284",
+        "26060700",
+        1655524799999,
+        "21724165.0184",
+        63060,
+        "13082750",
+        "10908742.4098",
+        "0"
+    ],
+    [
+        1655524800000,
+        "0.8285",
+        "0.8338",
+        "0.7759",
+        "0.7844",
+        "36511934",
+        1655539199999,
+        "29239143.1938",
+        98918,
+        "17202991",
+        "13773547.8956",
+        "0"
+    ],
+    [
+        1655539200000,
+        "0.7844",
+        "0.8127",
+        "0.7650",
+        "0.7974",
+        "36670318",
+        1655553599999,
+        "28981838.6192",
+        99966,
+        "18899159",
+        "14953973.5539",
+        "0"
+    ],
+    [
+        1655553600000,
+        "0.7974",
+        "0.7996",
+        "0.7790",
+        "0.7802",
+        "17637764",
+        1655567999999,
+        "13925935.2878",
+        50664,
+        "8056347",
+        "6363283.2655",
+        "0"
+    ],
+    [
+        1655568000000,
+        "0.7803",
+        "0.7931",
+        "0.7437",
+        "0.7465",
+        "33703047",
+        1655582399999,
+        "25963071.0948",
+        94414,
+        "15722905",
+        "12127062.5207",
+        "0"
+    ],
+    [
+        1655582400000,
+        "0.7467",
+        "0.7530",
+        "0.7239",
+        "0.7498",
+        "23754469",
+        1655596799999,
+        "17562139.0435",
+        70231,
+        "11381849",
+        "8414750.6995",
+        "0"
+    ]
+]
+</script>
+<script>
+	Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+  return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+	var candleLastBorder=0;
+	var candleWidth=20;
+	var candleBetweenDistance=3;
+
+	function findMax(inArr,index){
+		let maxValue=inArr[0][index];
+		for(i=0;i<inArr.length;i++){
+			if(maxValue<inArr[i][index]){
+				maxValue=inArr[i][index];
+				}
+		}
+		return maxValue;
+	}
+
+	function findMin(inArr,index){
+		let minValue=inArr[0][index];
+		for(i=0;i<inArr.length;i++){
+			if(minValue>inArr[i][index]){
+				minValue=inArr[i][index];
+			}
+		}
+		return minValue;
+	}
+
+	let candleMinBorder=findMin(candles,candleDownBorder);
+	let candleMaxBorder=findMax(candles,candleUpBorder);
+
+	//let perPixel = 200/(candleMaxBorder-candleMinBorder)
+
+
+	var graphWidth=candles.length*(candleWidth+candleBetweenDistance);
+	var graphHeight=candleMinBorder+candleMaxBorder;
+
+	var c = document.getElementById("myCanvas");
+	var ctx = c.getContext("2d");
+	ctx.transform(1, 0, 0, -1, 0, c.height)
+	//ctx.moveTo(0, 0);
+	//ctx.lineTo(15, 200);
+	var candlePosition=5;
+	var candleMin,candleMax;
+
+	candleMin=candles[0][low]*1;
+	candleMin=candleMin.map(candleMinBorder,candleMaxBorder,0,200)
+	candleMax=candles[0][high]*1
+	candleMax=(candleMax.map(candleMinBorder,candleMaxBorder,0,200))-candleMin
+
+
+	console.log(candleMin+" "+candleMax)
+	ctx.fillRect(candlePosition, (candleMin), candleWidth, (candleMax));
+
+
+		for(i=1;i<candles.length;i++){
+			candlePosition=candlePosition+candleWidth+candleBetweenDistance;
+			candleMin=candles[i][low]*1;
+			candleMin=candleMin.map(candleMinBorder,candleMaxBorder,0,200)
+			candleMax=candles[i][high]*1
+			candleMax=candleMax.map(candleMinBorder,candleMaxBorder,0,200)-candleMin
+			console.log(candleMin+" "+candleMax)
+			ctx.fillRect(candlePosition,(candleMin) , candleWidth,(candleMax) );
+	}
+
+
+
+	ctx.stroke();
+</script>
+<input type="button" value="Test" onclick= "tempFunction()"/>
+<!--<script src="temp.js"></script> -->
+</body>
+</html>

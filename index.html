@@ -1,0 +1,119 @@
+<html>
+
+<head>
+	<title>MM Watcher</Title>
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+	<script src="src/charts.js"></script>
+	<!--<script src="src/jquery-3.6.0.min.js"/>-->
+	<style>
+		body {
+			background-color: grey;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<div>
+			<select id="futuresList">
+
+			</select>
+			<input type="button" value="Select" onclick="selectCoinButtonPress()" id="submit" />
+			<input type="button" value="Test" onclick="tempFunction()" />
+		</div>
+		<div>
+			<table border=1>
+				<tr>
+					<td>Description</td>
+					<td>Pen Futures Order Book</td>
+					<td>Spot Order Book</td>
+				</tr>
+				<tr>
+					<td>
+						<table>
+							<div>
+								<tr>
+									<td>
+										<H2><a href="https://academy.binance.com/en/glossary/bid-price">Bids</a></H2>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<H1 id="priceText">Price</H1>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<H2><a href="https://academy.binance.com/ru/glossary/asking-price">Asks</a></H2>
+									</td>
+								</tr>
+							</div>
+						</table>
+					</td>
+					<td>
+						<table>
+							<div id="futuresArea">
+								<tr>
+									<td class="statistic">
+										<H3 id="futuresMaxBidAmount"></H3>
+									</td>
+									<td>
+										<H2 id="futuresMaxBidPrice"></H2>
+									</td>
+									<td id="futuresMaxBidAbsolute"></td>
+								</tr>
+								<tr>
+									<td class="statistic">
+										<H3 id="futuresMaxBidPercentage"></H3>
+									</td>
+									<td>
+										<H1 id="futuresPrice"></H1>
+									</td>
+									<td id="futuresAbsoluteRatio"></td>
+								</tr>
+								<tr>
+									<td class="statistic">
+										<H3 id="futuresMaxAskAmount"></H3>
+									</td>
+									<td>
+										<H2 id="futuresMaxAskPrice">
+											</H1>
+									</td>
+									<td id="futuresMaxAskAbsolute"></td>
+								</tr>
+							</div>
+						</table>
+					</td>
+					<td>
+						<div id="spotArea">
+							<table>
+								<tr>
+									<td>
+										<H2 id="spotMaxBidPrice"></H2>
+									</td>
+									<td id="spotAbsoluteMaxBid"></td>
+								</tr>
+								<tr>
+									<td>
+										<H1 id="spotPrice"></H1>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<H2 id="spotMaxAskPrice"></H2>
+									</td>
+									<td id="spotAbsoluteMaxAsk"></td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<script src="src/script.js"></script>
+
+		</div>
+	</div>
+
+</body>
+
+</html>
